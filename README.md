@@ -13,6 +13,8 @@ Each drawing is a collection of paths, where each path is the collection of poin
 
 The data is then cleaned using `node dataset_generator.js` from the `node` folder. This script turns each raw file into 8 `json` files, one for each drawing, which contain a dictionary containing just the paths for that subject. Each drawing is also rendered as a `png` image for ease of visualization.
 
+The `feature_extractor.js` script is used to extract features from the data. These features are then written into dedicated `.json` and `.js` files.
+
 ## Structure
 The structure of the project is currently as follows:
 ```
