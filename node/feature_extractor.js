@@ -15,11 +15,13 @@ for (const sample of samples) {
     );
     sample.point = [
         features.getPathCount(paths),
-        features.getPointCount(paths)
+        features.getPointCount(paths),
+        features.getMaxHeight(paths),
+        features.getMaxWidth(paths)
     ];
 }
 
-const featureNames = ["Path Count", "Point Count"];
+const featureNames = ["Path Count", "Point Count", "Max Height", "Max Width"];
 
 fs.writeFileSync(
     constants.FEATURES,

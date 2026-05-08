@@ -2,6 +2,20 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: skyblue;
     overscroll-behavior: none;
+
+    height: 100%;
+    margin: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 420px;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: 100vh;
+    overflow: hidden;
+}
+
+h1 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    margin: 16px;
 }
 
 #content {
@@ -65,12 +79,43 @@ button:disabled, button:disabled:hover {
 }
 
 #container {
-    width:calc(100% - 400px);
+    grid-column: 1;
+    grid-row: 2;
+
+    width: auto;
+    min-width: 0;
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 0 12px 24px 12px;
+    box-sizing: border-box;
 }
 
-#chartContainer {
-    position:fixed;
-    right: 0;
-    top: 50%;
-    transform: translate(0, -50%);
+#chartContainers {
+    grid-column: 2;
+    grid-row: 2;
+
+    position: static;
+    transform: none;
+
+    min-height: 0;
+    height: 100%;
+
+    overflow-y: auto;
+    overflow-x: auto;
+
+    padding: 12px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+#chartContainer,
+#chartContainer2 {
+    flex: 0 0 auto;
 }

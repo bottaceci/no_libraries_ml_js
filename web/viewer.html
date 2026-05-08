@@ -8,7 +8,10 @@
     </head>
     <body>
         <h1>Data Viewer</h1>
-        <div id="chartContainer"></div>
+        <div id="chartContainers">
+            <div id="chartContainer"></div>
+            <div id="chartContainer2"></div>
+        </div>
         <div id="container"></div>
         <script src="../common/js_objects/features.js"></script>
         <script src="../common/constants.js"></script>
@@ -30,17 +33,33 @@
 
             const options = {
                 size: 400,
-                axesLabels:featureNames,
                 styles:utils.styles,
                 transparency:0.7,
                 icon:'image'
             };
+            const options_1 = {
+                ...options,
+                pointIndices: [0,1],
+                axesLabels:[featureNames[0], featureNames[1]],
+            }
+            const options_2 = {
+                ...options,
+                pointIndices: [2,3],
+                axesLabels:[featureNames[2], featureNames[3]],
+            }
             graphics.generateImages(utils.styles);
 
             const chart = new Chart(
                 chartContainer,
                 samples,
-                options,
+                options_1,
+                handleClick
+            );
+
+            const chart2 = new Chart(
+                chartContainer2,
+                samples,
+                options_2,
                 handleClick
             );
         </script>

@@ -52,3 +52,6 @@ Where
 - To open html files from the WSL2 terminal, use `chrome "$(wslpath -w path/to/html/file)"`
 - Data was not loaded into the repository, but was taken from https://github.com/gniziemazity/drawing-data
 - `samples.js` is basically the content of the `data/samples.json` file put into a JavaScript constant. This is not really the normal procedure, but this was done in order to avoid CORS (Cross-Origin Resource Sharing) (??) and building a dedicated web server. Maybe try to implement it this way after finishing the project.
+
+## Homework
+- Extract two more features from the samples and show them on the chart

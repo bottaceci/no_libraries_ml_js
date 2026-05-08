@@ -52,4 +52,5 @@ function handleClick(sample, doScroll=true) {
         });
     }
     chart.selectSample(sample);
+    chart2.selectSample(sample);
 }

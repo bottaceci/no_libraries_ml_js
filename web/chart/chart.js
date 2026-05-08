@@ -2,6 +2,7 @@ class Chart{
    constructor(container,samples,options,onClick=null){
       this.samples=samples;
 
+      this.pointIndices = options.pointIndices || [0, 1];
       this.axesLabels=options.axesLabels;
       this.styles=options.styles;
       this.icon=options.icon;
@@ -74,7 +75,7 @@ class Chart{
             math.remapPoint(
                this.dataBounds,
                this.pixelBounds,
-               s.point
+               this.#getPoint(s)
             )
          );
          const index=math.getNearest(pLoc,pPoints);
@@ -198,10 +199,20 @@ class Chart{
       return bounds;
    }
 
+   #getPoint(sample) {
+      const [xIndex, yIndex] = this.pointIndices;
+      return [
+         sample.point[xIndex],
+         sample.point[yIndex]
+      ];
+   }
+
    #getDataBounds(){
       const {samples}=this;
-      const x=samples.map(s=>s.point[0]);
-      const y=samples.map(s=>s.point[1]);
+      const points = samples.map(s => this.#getPoint(s));
+
+      const x = points.map(p => p[0]);
+      const y = points.map(p => p[1]);
       const minX=Math.min(...x);
       const maxX=Math.max(...x);
       const minY=Math.min(...y);
@@ -247,7 +258,7 @@ class Chart{
       const pLoc=math.remapPoint(
          this.dataBounds,
          this.pixelBounds,
-         sample.point
+         this.#getPoint(sample)
       ); 
       const grd=this.ctx.createRadialGradient(
          ...pLoc,0,...pLoc,this.margin
@@ -353,7 +364,9 @@ class Chart{
    #drawSamples(samples){
       const {ctx,dataBounds,pixelBounds}=this;
       for(const sample of samples){ 
-         const {point,label}=sample;
+         const {label}=sample;
+         const point = this.#getPoint(sample);
+
          const pixelLoc=math.remapPoint(
             dataBounds,pixelBounds,point
          );
