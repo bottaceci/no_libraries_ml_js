@@ -92,6 +92,33 @@ utils.normalizePoints = (points, minMax) => {
     return {min,max};
 }
 
+utils.standardizePoints = (points, avgDev) => {
+    let avg, dev;
+    const dimensions = points[0].length;
+    if (avgDev) {
+        avg = avgDev.avg;
+        dev = avgDev.dev;
+    } else {
+        const feat0 = points.map((e) => e[0]); 
+        const feat1 = points.map((e) => e[1]); 
+        avg = [
+            feat0.reduce((a, b) => a + b) / feat0.length,
+            feat1.reduce((a, b) => a + b) / feat1.length,
+        ];
+        dev = [
+            Math.sqrt(feat0.reduce((a, b) => a + (avg[0] - b)**2, 0) / feat0.length),
+            Math.sqrt(feat1.reduce((a, b) => a + (avg[1] - b)**2, 0) / feat1.length)
+        ]
+    }
+
+    for (let i=0; i<points.length; i++) {
+        for (let j=0; j<dimensions; j++) {
+            points[i][j] = (points[i][j] - avg[j])/dev[j];
+        }
+    }
+    return {avg,dev}
+}
+
 if (typeof module !== 'undefined') {
     module.exports = utils;
 };

@@ -22,6 +22,10 @@ const minMax = utils.normalizePoints(
     samples.map (s => s.point)
 );
 
+// const avgDev = utils.standardizePoints(
+//     samples.map (s => s.point)
+// );
+
 const featureNames = featureFunctions.inUse.map( f => f.name);
 
 fs.writeFileSync(
