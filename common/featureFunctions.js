@@ -22,6 +22,11 @@ featureFunctions.getMaxWidth = (paths) => {
     return Math.min(Math.max(...widths) - Math.min(...widths), 450)
 }
 
+featureFunctions.inUse = [
+    {name: "Width", function: featureFunctions.getMaxWidth},
+    {name: "Height", function: featureFunctions.getMaxHeight}
+];
+
 if (typeof module !== 'undefined') {
     module.exports = featureFunctions;
 };

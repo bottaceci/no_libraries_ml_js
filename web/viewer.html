@@ -1,92 +1,85 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, maximum-scale=0.9, user-scalable=0">
-        <meta charset="UTF-8">
-        <title>Data Viewer</title>
-        <link rel="stylesheet" href="styles.css"/>
-    </head>
-    <body>
-        <h1>Data Viewer</h1>
-        <div id="chartContainers">
-            <div id="controlPanel">
-                <button onClick="toggleInput()">
-                    Toggle Input
-                </button>
-            </div>
-            <div id="inputContainer"></div>
-            <div id="chartContainer"></div>
-            <div id="chartContainer2"></div>
-        </div>
-        <div id="container"></div>
-        <script src="../common/js_objects/features.js"></script>
 
-        <script src="../common/constants.js"></script>
-        <script src="../common/utils.js"></script>
-        <script src="../common/draw.js"></script>
-        <script src="../common/featureFunctions.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Data Viewer</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
 
-        <script src="js/display.js"></script>
-        <script src="js/sketchPad.js"></script>
+<body>
+    <h1>Data Viewer</h1>
+    <div id="inputContainer">
+        <div id="predictedLabelContainer"></div>
+    </div>
+    <div id="chartContainer"></div>
+    <div id="controlPanel">
+        <button onClick="toggleInput()">
+            Toggle Input
+        </button>
+    </div>
+    <div id="container"></div>
+    <script src="../common/js_objects/features.js"></script>
 
-        <script src="./chart/chart.js"></script>
-        <script src="./chart/graphics.js"></script>
-        <script src="./chart/math.js"></script>
+    <script src="../common/constants.js"></script>
+    <script src="../common/utils.js"></script>
+    <script src="../common/draw.js"></script>
+    <script src="../common/featureFunctions.js"></script>
 
-        <script>
-            const {samples, featureNames} = features;
-            const groups = utils.groupBy(samples, "student_id");
-            
-            for (let student_id in groups) {
-                const samples = groups[student_id];
-                const studentName = samples[0].student_name;
-                createRow(container, studentName, samples);
-            }
+    <script src="js/display.js"></script>
+    <script src="js/sketchPad.js"></script>
 
-            const options = {
-                size: 400,
-                styles:utils.styles,
-                transparency:0.7,
-                icon:'image'
-            };
-            const options_1 = {
-                ...options,
-                pointIndices: [0,1],
-                axesLabels:[featureNames[0], featureNames[1]],
-            }
-            const options_2 = {
-                ...options,
-                pointIndices: [2,3],
-                axesLabels:[featureNames[2], featureNames[3]],
-            }
-            graphics.generateImages(utils.styles);
+    <script src="./chart/graphics.js"></script>
+    <script src="./chart/math.js"></script>
+    <script src="./chart/chart.js"></script>
 
-            const chart = new Chart(
-                chartContainer,
-                samples,
-                options_1,
-                handleClick
-            );
+    <script>
+        const { samples, featureNames } = features;
+        const groups = utils.groupBy(samples, "student_id");
 
-            const chart2 = new Chart(
-                chartContainer2,
-                samples,
-                options_2,
-                handleClick
-            );
+        for (let student_id in groups) {
+            const samples = groups[student_id];
+            const studentName = samples[0].student_name;
+            createRow(container, studentName, samples);
+        }
 
-            const sketchPad = new SketchPad(inputContainer, onDrawingUpdate);
+        const options = {
+            size: 500,
+            axesLabels: featureNames,
+            styles: utils.styles,
+            transparency: 0.7,
+            icon: "image"
+        };
+        graphics.generateImages(utils.styles);
 
-            function onDrawingUpdate(paths) {
-                const point = [
-                    featureFunctions.getPathCount(paths),
-                    featureFunctions.getPointCount(paths),
-                    featureFunctions.getMaxHeight(paths),
-                    featureFunctions.getMaxWidth(paths)
-                ];
-                chart.showDynamicPoint([point[0],point[1]]);
-                chart2.showDynamicPoint([point[2],point[3]]);
-            }
-        </script>
-    </body>
+        const chart = new Chart(
+            chartContainer,
+            samples,
+            options,
+            handleClick
+        );
+
+        const sketchPad =
+            new SketchPad(inputContainer, onDrawingUpdate);
+        sketchPad.canvas.style.cssText +=
+            "outline:10000px solid rgba(0,0,0,0.7);"
+
+        function onDrawingUpdate(paths) {
+            const functions = featureFunctions.inUse.map(f => f.function);
+            const point = functions.map(f => f(paths));
+            const { label, nearestSample } = classify(point);
+            predictedLabelContainer.innerHTML =
+                "Is it a " + label + " ?";
+            chart.showDynamicPoint(point, label, nearestSample);
+        }
+
+        function classify(point) {
+            const samplePoints = samples.map(s => s.point);
+            const index = utils.getNearest(point, samplePoints);
+            const nearestSample = samples[index];
+            return { label: nearestSample.label, nearestSample };
+        }
+    </script>
+</body>
+
 </html>

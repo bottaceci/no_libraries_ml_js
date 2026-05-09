@@ -52,7 +52,7 @@ function handleClick(sample, doScroll=true) {
         });
     }
     chart.selectSample(sample);
-    chart2.selectSample(sample);
+    //chart2.selectSample(sample);
 }
 
 function toggleInput() {
@@ -62,6 +62,6 @@ function toggleInput() {
     } else {
         inputContainer.style.display="none";
         chart.hideDynamicPoint();
-        chart2.hideDynamicPoint();
+        //chart2.hideDynamicPoint();
     }
 }
