@@ -37,9 +37,21 @@ class Chart{
       this.dataBounds=this.#getDataBounds();
       this.defaultDataBounds=this.#getDataBounds();
 
+      this.dynamicPoint = null;
+
       this.#draw();
 
       this.#addEventListeners();
+   }
+
+   showDynamicPoint(point) {
+      this.dynamicPoint = point;
+      this.#draw();
+   }
+
+   hideDynamicPoint() {
+      this.dynamicPoint = null;
+      this.#draw();
    }
 
    #addEventListeners(){
@@ -244,6 +256,16 @@ class Chart{
          this.#emphasizeSample(
             this.selectedSample,"yellow"
          );
+      }
+
+      if (this.dynamicPoint) {
+         const pixelLoc = math.remapPoint(
+            this.dataBounds,
+            this.pixelBounds,
+            this.dynamicPoint
+         );
+         graphics.drawPoint(ctx, pixelLoc, "rgba(255,255,255,0.7)",10000000);
+         graphics.drawPoint(ctx, pixelLoc, "black");
       }
 
       this.#drawAxes();
