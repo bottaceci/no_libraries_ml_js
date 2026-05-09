@@ -23,6 +23,8 @@ featureFunctions.getMaxWidth = (paths) => {
 }
 
 featureFunctions.inUse = [
+    //{name: "Path Count", function: featureFunctions.getPathCount},
+    //{name: "Point Count", function: featureFunctions.getPointCount},
     {name: "Width", function: featureFunctions.getMaxWidth},
     {name: "Height", function: featureFunctions.getMaxHeight}
 ];
