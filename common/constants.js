@@ -2,6 +2,7 @@ const constants={};
 
 constants.DATA_DIR = "../data";
 constants.RAW_DIR = constants.DATA_DIR + "/raw";
+constants.MODEL_DIR = constants.DATA_DIR + "/models";
 constants.DATASET_DIR = constants.DATA_DIR + "/dataset";
 constants.JSON_DIR = constants.DATASET_DIR + "/json";
 constants.IMG_DIR = constants.DATASET_DIR + "/img";
@@ -19,7 +20,7 @@ constants.TESTING = constants.DATASET_DIR + '/testing.json';
 constants.TESTING_JS = constants.JS_OBJECTS + "/testing.js";
 constants.TESTING_CSV = constants.DATASET_DIR + '/testing.csv';
 
-constants.DECISION_BOUNDARY = constants.DATASET_DIR + "/decision_boundary.png"
+constants.DECISION_BOUNDARY = constants.MODEL_DIR + "/decision_boundary.png"
 
 
 if (typeof module != 'undefined') {

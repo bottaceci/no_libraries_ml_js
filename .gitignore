@@ -1,5 +1,6 @@
 data/
 node_modules/
+misc/
 python/env/
 README_private.md
 README.md
