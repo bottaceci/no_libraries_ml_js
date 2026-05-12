@@ -10,12 +10,14 @@ const samples = JSON.parse(
     fs.readFileSync(constants.SAMPLES)
 );
 
-for (const sample of samples) {
+for (let i=0; i<samples.length; i++) {
+    const sample = samples[i];
     const paths = JSON.parse(
         fs.readFileSync(constants.JSON_DIR + '/' + sample.id + '.json')
     );
     const functions = featureFunctions.inUse.map(f => f.function);
     sample.point = functions.map(f => f(paths));
+    utils.printProgress(i, samples.length - 1);
 }
 
 const featureNames = featureFunctions.inUse.map( f => f.name);
