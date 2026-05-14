@@ -21,6 +21,9 @@ constants.TESTING_JS = constants.JS_OBJECTS + "/testing.js";
 constants.TESTING_CSV = constants.DATASET_DIR + '/testing.csv';
 
 constants.DECISION_BOUNDARY = constants.MODEL_DIR + "/decision_boundary.png"
+constants.MODEL = constants.MODEL_DIR + "/model.json"
+constants.MODEL_JS = constants.JS_OBJECTS + "/model.js"
+
 
 
 if (typeof module != 'undefined') {

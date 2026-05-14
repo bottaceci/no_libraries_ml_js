@@ -24,12 +24,18 @@ featureFunctions.getPointCount = (paths) => {
 
 featureFunctions.getMaxHeight = (paths) => {
     const points = paths.flat();
+    if (points.length == 0) {
+        return 0;
+    }
     const heights = points.map((e) => e[1]); 
     return Math.max(...heights) - Math.min(...heights)
 };
 
 featureFunctions.getMaxWidth = (paths) => {
     const points = paths.flat();
+    if (points.length == 0) {
+        return 0;
+    }
     const widths = points.map((e) => e[0]); 
     return Math.max(...widths) - Math.min(...widths)
 };
