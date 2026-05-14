@@ -20,7 +20,7 @@ if (fs.existsSync(constants.MODEL)) {
     mlp.load(JSON.parse(fs.readFileSync(constants.MODEL)));
 }
 
-mlp.fit(trainingSamples, 5000);
+mlp.fit(trainingSamples, 10);
 
 fs.writeFileSync(
     constants.MODEL,
@@ -65,6 +65,7 @@ for (let x=0; x<canvas.width; x++) {
         ctx.fillStyle = color;
         ctx.fillRect(x,y,1,1);  // draw a 1px rectangle on that point
     }
+    utils.printProgress(x + 1, canvas.width);
 }
 
 const buffer = canvas.toBuffer("image/png");
